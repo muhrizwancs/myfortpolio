@@ -348,11 +348,38 @@
     .project-body { padding: 1.25rem 1.75rem 1.75rem; flex: 1; }
     .project-name { font-family: var(--font-disp); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
     .project-desc { font-size: 0.87rem; color: var(--mid); line-height: 1.7; margin-bottom: 1rem; }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
     .tag {
       font-size: 0.72rem; font-weight: 500;
       background: rgba(37,99,235,0.08); color: var(--accent);
       padding: 0.25rem 0.65rem; border-radius: 99px;
+    }
+    .project-footer {
+      border-top: 1px solid var(--border);
+      padding: 1rem 1.75rem;
+      display: flex; gap: 0.75rem; align-items: center;
+    }
+    .btn-view-code {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--ink);
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      padding: 0.45rem 1rem; border-radius: 99px;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .btn-view-code:hover {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .btn-view-code svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .btn-coming-soon {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.78rem; font-weight: 500;
+      color: var(--mid);
+      cursor: default;
     }
 
     /* ── EDUCATION ───────────────────────────────────────────── */
@@ -490,7 +517,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo"></div>
+  <div class="nav-logo">MR<span>.</span></div>
   <ul class="nav-links">
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -681,6 +708,7 @@
     <h2 class="section-title reveal reveal-delay-1">Projects I've Built</h2>
     <div class="projects-grid">
 
+      <!-- HireReady AI -->
       <div class="project-card reveal">
         <div class="project-header">
           <div class="project-icon" style="background:rgba(37,99,235,0.1);">🤖</div>
@@ -695,21 +723,58 @@
             <span class="tag">Feedback Engine</span>
           </div>
         </div>
+        <div class="project-footer">
+          <a href="https://github.com/muhrizwancs/hiready-ai" target="_blank" rel="noopener" class="btn-view-code">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View Code
+          </a>
+        </div>
       </div>
 
+      <!-- Lost & Found -->
       <div class="project-card reveal reveal-delay-1">
         <div class="project-header">
           <div class="project-icon" style="background:rgba(74,222,128,0.12);">🔍</div>
           <span class="project-type">Web · Campus</span>
         </div>
         <div class="project-body">
-          <div class="project-name">Lost & Found</div>
+          <div class="project-name">Lost &amp; Found</div>
           <div class="project-desc">A campus web platform where students can post and browse lost or found items. Features search functionality to reconnect item owners with finders and foster a community of helpfulness.</div>
           <div class="project-tags">
             <span class="tag">Web Platform</span>
             <span class="tag">Search</span>
             <span class="tag">Community</span>
           </div>
+        </div>
+        <div class="project-footer">
+          <span class="btn-coming-soon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Repo coming soon
+          </span>
+        </div>
+      </div>
+
+      <!-- E-Commerce App -->
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-header">
+          <div class="project-icon" style="background:rgba(251,191,36,0.13);">🛒</div>
+          <span class="project-type">Flutter · Mobile</span>
+        </div>
+        <div class="project-body">
+          <div class="project-name">E-Commerce App</div>
+          <div class="project-desc">A full-featured cross-platform e-commerce mobile application built with Flutter. Includes product listings, cart management, user authentication, and a smooth checkout experience.</div>
+          <div class="project-tags">
+            <span class="tag">Flutter</span>
+            <span class="tag">Dart</span>
+            <span class="tag">Mobile App</span>
+            <span class="tag">UI/UX</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="btn-coming-soon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Repo coming soon
+          </span>
         </div>
       </div>
 
@@ -731,7 +796,7 @@
             <div class="edu-school">University of Swabi</div>
           </div>
         </div>
-        <span class="edu-year">2026</span>
+        <span class="edu-year">Expected 2026</span>
       </div>
       <div class="edu-card reveal reveal-delay-1">
         <div class="edu-left">
@@ -765,7 +830,7 @@
     <div class="contact-grid">
       <div>
         <p class="contact-text">
-          I'm always open to new opportunities, collaborations, or helping to solve problems related to tech. Whether you have a project in mind or want to connect professionally drop me a message.
+          I'm always open to new opportunities, collaborations, or just a good conversation about tech. Whether you have a project in mind or want to connect professionally — drop me a message.
         </p>
         <div class="contact-links">
           <a href="mailto:muhrizwancs@gmail.com" class="contact-link">
@@ -782,6 +847,14 @@
           </a>
         </div>
       </div>
+      <div>
+        <div class="contact-right-label">Interests & Hobbies</div>
+        <div class="interests-grid">
+          <div class="interest-item">⚽ Football</div>
+          <div class="interest-item">🏋️ Weightlifting</div>
+          <div class="interest-item">📺 Watching Matches</div>
+          <div class="interest-item">🤲 Community Service</div>
+        </div>
       </div>
     </div>
   </div>
