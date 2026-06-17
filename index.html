@@ -154,22 +154,25 @@
       border: 4px solid var(--surface);
     }
 
-    /* 3 pills fixed at even 120° spacing around the photo, no motion */
+    /* 3 pills fixed at true 120° spacing around the photo, no motion.
+       Photo is 210x210 centered in a 400x400 scene, so photo edge sits
+       95px from center. Pills placed just outside that radius at
+       90° (top), 210° (bottom-left), 330° (bottom-right). */
     .orbit-pill-wrap {
       position: absolute;
       inset: 0;
     }
-    /* top */
+    /* top — 90° */
     .orbit-pill-wrap:nth-child(3) .orbit-pill {
-      top: -22px; left: 50%; transform: translateX(-50%);
+      top: 6px; left: 50%; transform: translateX(-50%);
     }
-    /* bottom-left */
+    /* bottom-left — 210° */
     .orbit-pill-wrap:nth-child(4) .orbit-pill {
-      bottom: 18px; left: 6px; transform: none;
+      bottom: 50px; left: 18px; transform: none;
     }
-    /* bottom-right */
+    /* bottom-right — 330° */
     .orbit-pill-wrap:nth-child(5) .orbit-pill {
-      bottom: 18px; right: 6px; transform: none;
+      bottom: 50px; right: 18px; transform: none;
     }
 
     .orbit-pill {
@@ -402,8 +405,23 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; text-align: center; padding-top: calc(var(--nav-h) + 2.5rem); min-height: unset; gap: 2rem; overflow: visible; }
-      .orbit-scene { order: -1; margin: 0 auto; }
+      .hero { grid-template-columns: 1fr; text-align: center; padding-top: calc(var(--nav-h) + 2.5rem); min-height: unset; gap: 2.5rem; overflow: visible; }
+      .orbit-scene {
+        order: -1; margin: 0 auto;
+        /* Collapse to the stacked photo+pills layout at every width below 900px,
+           not just below 680px, so there's no in-between state where the
+           400px circle overflows the narrowed single-column hero. */
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: flex-start;
+        width: 210px; height: auto;
+      }
+      .orbit-ring, .orbit-pill-wrap { display: none; }
+      .orbit-photo {
+        width: 210px; height: 210px;
+        border-radius: 28px;
+        object-position: top center;
+      }
+      .orbit-pills-mobile { display: flex; }
       .hero-desc { margin: 0 auto 2rem; }
       .hero-actions { justify-content: center; }
       .hero-eyebrow { margin: 0 auto 1.5rem; }
@@ -418,18 +436,6 @@
       body, html { overflow-x: hidden; }
       .hero { padding-left: 1.25rem; padding-right: 1.25rem; }
       .hero-name { font-size: clamp(2rem,9vw,2.8rem); letter-spacing: -1px; }
-      /* On small screens: same square photo size as desktop, pills shown as static row below */
-      .orbit-scene {
-        width: 210px;
-        height: 210px;
-      }
-      .orbit-ring, .orbit-pill-wrap { display: none; }
-      .orbit-photo {
-        width: 210px; height: 210px;
-        border-radius: 28px;
-        object-position: top center;
-      }
-      .orbit-pills-mobile { display: flex; }
       section { padding: 3.5rem 1.25rem; overflow-x: hidden; width: 100%; }
       .section-inner { width: 100%; max-width: 100%; margin: 0 auto; }
       .skills-grid { grid-template-columns: 1fr 1fr; }
