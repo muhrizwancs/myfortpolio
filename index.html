@@ -23,27 +23,7 @@ body{
 a{color:inherit;text-decoration:none;}
 ul{list-style:none;}
 
-/* ── CUSTOM CURSOR (desktop only) ── */
-#cursor,#cursor-ring{display:none;}
-@media(pointer:fine){
-  body{ cursor:none; }
-  a,button{ cursor:none; }
-  #cursor{
-    display:block;
-    position:fixed;width:12px;height:12px;border-radius:50%;
-    background:var(--accent);pointer-events:none;z-index:9999;
-    transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;
-    box-shadow:0 0 20px var(--accent),0 0 40px rgba(99,102,241,.4);
-  }
-  #cursor-ring{
-    display:block;
-    position:fixed;width:40px;height:40px;border-radius:50%;
-    border:1.5px solid rgba(99,102,241,.5);pointer-events:none;z-index:9998;
-    transform:translate(-50%,-50%);transition:all .12s ease;
-  }
-  body:has(a:hover) #cursor,body:has(button:hover) #cursor{width:24px;height:24px;background:var(--accent2);}
-  body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:60px;height:60px;border-color:var(--accent2);}
-}
+/* default browser cursor */
 
 /* ── CANVAS ── */
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
@@ -145,7 +125,7 @@ nav{
   display:inline-flex;align-items:center;gap:.5rem;
   border:1.5px solid var(--border);background:rgba(99,102,241,.08);
   padding:.8rem 1.7rem;border-radius:99px;font-weight:500;font-size:.88rem;color:#e2e2f0;
-  transition:all .2s;cursor:none;
+  transition:all .2s;
   transform:translateZ(20px);
   box-shadow:0 8px 25px rgba(0,0,0,.3);
 }
@@ -177,25 +157,7 @@ nav{
   position:relative;overflow:hidden;
   transform-style:preserve-3d;
 }
-/* Spinning orbit rings */
-.orbit{
-  position:absolute;border-radius:50%;border-style:solid;
-  top:50%;left:50%;pointer-events:none;
-  animation:orbit-spin linear infinite;
-}
-.orbit-1{width:340px;height:340px;border-width:1px;border-color:rgba(99,102,241,.12) transparent rgba(99,102,241,.12) transparent;transform:translate(-50%,-50%);animation-duration:12s;}
-.orbit-2{width:260px;height:260px;border-width:1px;border-color:rgba(168,85,247,.1) transparent;transform:translate(-50%,-50%);animation-duration:8s;animation-direction:reverse;}
-.orbit-3{width:180px;height:180px;border-width:1px;border-color:rgba(6,182,212,.08) transparent;transform:translate(-50%,-50%);animation-duration:5s;}
-@keyframes orbit-spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
-
-/* orbit dots */
-.orbit-dot{
-  position:absolute;width:8px;height:8px;border-radius:50%;top:-4px;left:50%;
-  margin-left:-4px;
-}
-.orbit-1 .orbit-dot{background:var(--accent);box-shadow:0 0 12px var(--accent),0 0 24px var(--accent);}
-.orbit-2 .orbit-dot{background:var(--accent2);box-shadow:0 0 10px var(--accent2);}
-.orbit-3 .orbit-dot{background:var(--accent3);box-shadow:0 0 10px var(--accent3);}
+/* orbits removed */
 
 .card-shine{
   position:absolute;inset:0;border-radius:28px;pointer-events:none;
@@ -466,10 +428,7 @@ footer{background:var(--bg);color:var(--mid);text-align:center;padding:1.8rem;fo
   .card-name{font-size:.95rem;}
   .card-role{font-size:.64rem;}
   .card-pill{font-size:.6rem;padding:.22rem .6rem;}
-  .orbit-1{width:210px;height:210px;}
-  .orbit-2{width:160px;height:160px;}
-  .orbit-3{width:110px;height:110px;}
-  .profile-card-wrap{overflow:hidden;width:min(260px,90vw);border-radius:32px;}
+  .profile-card-wrap{overflow:hidden;width:min(260px,90vw);}
   section{padding:3.5rem 1.2rem;overflow:hidden;width:100%;max-width:100vw;}
   .section-inner{width:100%;max-width:100%;overflow:hidden;}
   .section-title{font-size:1.65rem;letter-spacing:-1px;margin-bottom:1.75rem;}
@@ -498,8 +457,6 @@ footer{background:var(--bg);color:var(--mid);text-align:center;padding:1.8rem;fo
 </head>
 <body>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
 <canvas id="bg-canvas"></canvas>
 
 <!-- NAV -->
@@ -542,9 +499,6 @@ footer{background:var(--bg);color:var(--mid);text-align:center;padding:1.8rem;fo
   <div class="profile-card-wrap depth-near">
     <div class="profile-card" id="profileCard">
       <div class="profile-card-face">
-        <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
-        <div class="orbit orbit-2"><div class="orbit-dot"></div></div>
-        <div class="orbit orbit-3"><div class="orbit-dot"></div></div>
         <div class="card-shine" id="profileShine"></div>
         <div class="avatar-wrap">
           <div class="avatar-inner">
@@ -765,34 +719,7 @@ footer{background:var(--bg);color:var(--mid);text-align:center;padding:1.8rem;fo
 </div>
 
 <script>
-// ── CUSTOM CURSOR (desktop only) ──────────────────────────────
-const cur = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
-if(window.matchMedia('(pointer:fine)').matches){
-  let mx=window.innerWidth/2, my=window.innerHeight/2;
-  let rx=mx, ry=my;
-  let cursorVisible=false;
-  // Only show cursor when mouse enters window
-  document.addEventListener('mouseenter', ()=>{
-    cur.style.opacity='1'; ring.style.opacity='1'; cursorVisible=true;
-  });
-  document.addEventListener('mouseleave', ()=>{
-    cur.style.opacity='0'; ring.style.opacity='0'; cursorVisible=false;
-  });
-  document.addEventListener('mousemove', e=>{
-    mx=e.clientX; my=e.clientY;
-    if(!cursorVisible){ cur.style.opacity='1'; ring.style.opacity='1'; cursorVisible=true; }
-  });
-  // start hidden
-  cur.style.opacity='0'; ring.style.opacity='0';
-  cur.style.transition='opacity .2s'; ring.style.transition='opacity .2s, all .12s ease';
-  (function animCursor(){
-    cur.style.left=mx+'px'; cur.style.top=my+'px';
-    rx+=(mx-rx)*.15; ry+=(my-ry)*.15;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(animCursor);
-  })();
-}
+// default browser cursor
 
 // ── BG CANVAS (stars + nebula) ─────────────────────────────────
 const canvas=document.getElementById('bg-canvas');
@@ -846,18 +773,24 @@ const profileShine=document.getElementById('profileShine');
 const isTouch = !window.matchMedia('(pointer:fine)').matches;
 
 if(!isTouch){
+  // hero text parallax + card shine
   document.addEventListener('mousemove', e=>{
     heroTargX=(e.clientX/window.innerWidth-.5)*2;
     heroTargY=(e.clientY/window.innerHeight-.5)*2;
     const pc=profileCard.getBoundingClientRect();
-    const pdx=(e.clientX-pc.left-pc.width/2)/(pc.width/2);
-    const pdy=(e.clientY-pc.top-pc.height/2)/(pc.height/2);
-    profileCard.style.transform=`rotateY(${pdx*22}deg) rotateX(${-pdy*16}deg) scale(1.04)`;
-    profileShine.style.setProperty('--mx',((e.clientX-pc.left)/pc.width*100).toFixed(1)+'%');
-    profileShine.style.setProperty('--my',((e.clientY-pc.top)/pc.height*100).toFixed(1)+'%');
+    if(pc.width>0){
+      profileShine.style.setProperty('--mx',((e.clientX-pc.left)/pc.width*100).toFixed(1)+'%');
+      profileShine.style.setProperty('--my',((e.clientY-pc.top)/pc.height*100).toFixed(1)+'%');
+    }
   });
-  document.addEventListener('mouseleave',()=>{
-    profileCard.style.transform='';
+  // scale up on hover only - no rotation
+  profileCard.addEventListener('mouseenter',()=>{
+    profileCard.style.transition='transform .35s cubic-bezier(.23,1,.32,1)';
+    profileCard.style.transform='scale(1.07)';
+  });
+  profileCard.addEventListener('mouseleave',()=>{
+    profileCard.style.transition='transform .4s cubic-bezier(.23,1,.32,1)';
+    profileCard.style.transform='scale(1)';
   });
 
   (function heroParallax(){
